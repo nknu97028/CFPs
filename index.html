@@ -1,0 +1,822 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SSCI Math &amp; Science CFPs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: graph-paper masthead holding a deadline timeline, then a ledger of calls sorted by the next date that needs action.
+   Light theme = lab notebook (graph paper, blue-black ink, highlighter); dark theme = chalkboard.
+   Type: journal-style serif for headings and call titles, Plex Sans for UI text, Plex Mono for dates and metrics. */
+:root{
+  --paper:#F5F7F6; --sheet:#FFFFFF; --grid:rgba(31,95,139,.075);
+  --ink:#16232B; --ink-2:#46565F; --ink-3:#6E7E86; --rule:#D6DFE0; --rule-2:#E8EEEE;
+  --accent:#1F5F8B; --accent-soft:rgba(31,95,139,.10);
+  --hl:rgba(255,220,60,.6);
+  --urgent:#C0392B; --soon:#A35F00; --calm:#2F6F55;
+  --sci:#2E7D4F; --math:#4B4FB3; --stem:#A35C14; --tech:#0E7490;
+  --font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --font-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --font-title:"Source Serif 4",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141D1A; --sheet:#1A2521; --grid:rgba(214,232,222,.05);
+    --ink:#E4ECE7; --ink-2:#A9B8B1; --ink-3:#83928B; --rule:#2C3934; --rule-2:#24302C;
+    --accent:#8EC5EA; --accent-soft:rgba(142,197,234,.14);
+    --hl:rgba(233,212,90,.4);
+    --urgent:#FF8B7B; --soon:#F0B458; --calm:#8FD3AE;
+    --sci:#8FD3AE; --math:#ABAEF6; --stem:#E8AB6E; --tech:#72D2E6;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141D1A; --sheet:#1A2521; --grid:rgba(214,232,222,.05);
+  --ink:#E4ECE7; --ink-2:#A9B8B1; --ink-3:#83928B; --rule:#2C3934; --rule-2:#24302C;
+  --accent:#8EC5EA; --accent-soft:rgba(142,197,234,.14);
+  --hl:rgba(233,212,90,.4);
+  --urgent:#FF8B7B; --soon:#F0B458; --calm:#8FD3AE;
+  --sci:#8FD3AE; --math:#ABAEF6; --stem:#E8AB6E; --tech:#72D2E6;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.6;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1100px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Masthead */
+.masthead{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;border-bottom:1px solid var(--rule)}
+.masthead .wrap{padding-block:40px 30px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(32px,5.2vw,50px);line-height:1.08;margin:0;letter-spacing:-.01em;text-wrap:balance;max-width:18ch}
+.dek{font-size:16.5px;color:var(--ink-2);max-width:64ch;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:8px 30px;margin:6px 0 0;padding:0}
+.stats div{display:flex;align-items:baseline;gap:7px}
+.stats dt{order:2;font-size:14px;color:var(--ink-2)}
+.stats dd{order:1;margin:0;font-family:var(--font-mono);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.stats dd.urgent{color:var(--urgent)}
+.next{margin:0;font-size:14.5px;color:var(--ink-2)}
+.next strong{color:var(--ink);font-weight:600}
+
+/* Timeline */
+.runway{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 0 10px;margin-top:6px;min-width:0}
+.runway-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 18px;padding-inline:16px}
+.runway-head h2{font-family:var(--font-display);font-size:20px;font-weight:700;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2);margin:0;padding:0;list-style:none}
+.legend li{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--ink-2));border:2px solid var(--c,var(--ink-2))}
+.lg-dot.hollow{background:var(--sheet)}
+.rw-scroll{overflow-x:auto;padding:8px 16px 2px}
+.rw-track{position:relative;min-width:760px;height:220px}
+.tick{position:absolute;top:0;bottom:0;border-left:1px solid var(--rule-2)}
+.tick>span{position:absolute;top:0;left:4px;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.tick.year{border-left-color:var(--rule)}
+.tick.year>span{color:var(--ink);font-weight:600}
+.axis{position:absolute;left:0;right:0;top:22px;border-top:1.5px solid var(--ink-3)}
+.now{position:absolute;top:22px;bottom:0;border-left:1.5px dashed var(--urgent)}
+.now>span{position:absolute;bottom:0;left:4px;font-size:11px;font-family:var(--font-mono);color:var(--urgent);white-space:nowrap}
+.mk{position:absolute;top:34px;height:22px;padding:0;margin:0;border:0;background:none;cursor:pointer;color:var(--ink);font:inherit;--c:var(--ink-2)}
+.mk.d-sci{--c:var(--sci)} .mk.d-math{--c:var(--math)} .mk.d-stem{--c:var(--stem)} .mk.d-tech{--c:var(--tech)}
+.mk .dot{position:absolute;top:5px;width:12px;height:12px;border-radius:50%;background:var(--c);border:2px solid var(--c)}
+.mk .dot.a{background:var(--sheet)}
+.mk .dot.s{left:0} .mk .dot.e{right:0}
+.mk .seg{position:absolute;left:6px;right:6px;top:10px;height:2px;background:var(--c);opacity:.55}
+.mk .lab{position:absolute;left:15px;top:1px;font-size:12px;line-height:20px;padding:0 5px;border-radius:4px;background:var(--sheet);color:var(--ink);white-space:nowrap}
+.mk .lab b{font-family:var(--font-mono);font-weight:600}
+.mk:hover .lab,.mk:focus-visible .lab{background:var(--accent-soft)}
+.mk.off{opacity:.18}
+.mk.past{opacity:.35;filter:grayscale(1)}
+.rw-hint{font-size:12px;color:var(--ink-3);padding-inline:16px;margin:4px 0 0}
+
+/* Sections */
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:48px;padding-block:36px 28px}
+main>section{min-width:0}
+.sec-head h2{font-family:var(--font-display);font-size:28px;font-weight:700;margin:0;letter-spacing:-.005em;text-wrap:balance}
+.sec-sub{color:var(--ink-2);font-size:14.5px;margin:4px 0 0;max-width:72ch}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;padding:16px 0 12px}
+.seg{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
+.seg-label{font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-right:2px}
+.chip{font:inherit;font-size:13px;line-height:1;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink-2);cursor:pointer}
+.chip:hover{border-color:var(--ink-3)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.listbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;color:var(--ink-3);margin-bottom:10px}
+.btn{font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+#copy-status{color:var(--calm)}
+#copy-fallback{width:100%;min-height:160px;font-family:var(--font-mono);font-size:12.5px;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);margin-bottom:10px}
+
+/* Ledger */
+.ledger{background:var(--sheet);border:1px solid var(--rule);border-radius:12px}
+.call{display:grid;grid-template-columns:124px minmax(0,1fr) auto;gap:6px 22px;padding:20px 22px;scroll-margin-top:16px;border-radius:12px}
+.call+.call{border-top:1px solid var(--rule-2);border-top-left-radius:0;border-top-right-radius:0}
+.call.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%,35%{background:var(--hl)}100%{background:transparent}}
+.call.is-past{opacity:.6}
+.when{display:grid;align-content:start;gap:3px}
+.count{font-family:var(--font-mono);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;color:var(--calm)}
+.count .num{font-size:30px;font-weight:600;line-height:1.1}
+.count .unit{font-size:13px;font-family:var(--font-body)}
+.count.urgent{color:var(--urgent)}
+.count.soon{color:var(--soon)}
+.count.past,.count.none{color:var(--ink-3)}
+.count.none .num{font-size:22px}
+.date{font-family:var(--font-mono);font-size:13px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
+.date2{font-family:var(--font-mono);font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.date2.txt{font-family:var(--font-body)}
+.stage{font-family:var(--font-body);font-size:11.5px;line-height:1;padding:3px 6px;border-radius:4px;border:1px solid var(--ink-3);color:var(--ink-2);white-space:nowrap}
+.stage.abs{border-color:var(--accent);color:var(--accent)}
+.what{min-width:0;display:grid;gap:7px;align-content:start}
+.jline{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+.jname{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.badges{display:inline-flex;flex-wrap:wrap;gap:4px}
+.b{font-family:var(--font-mono);font-size:11px;line-height:1;padding:3px 6px;border-radius:4px;border:1px solid var(--rule);color:var(--ink-2);white-space:nowrap}
+.b.q1{background:var(--accent-soft);border-color:transparent;color:var(--accent);font-weight:600}
+.b.esci{border-color:var(--soon);color:var(--soon);font-weight:600}
+.ctitle{font-family:var(--font-title);font-size:20px;font-weight:600;line-height:1.3;margin:0;text-wrap:pretty}
+.note{margin:0;color:var(--ink-2);font-size:14.5px;max-width:70ch}
+.fine{margin:0;color:var(--ink-3);font-size:12.5px}
+.how{background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:13.5px;display:grid;gap:6px;max-width:72ch}
+.how strong{font-weight:600}
+.addr{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-width:0}
+.addr .who{color:var(--ink-2)}
+.addr code{font-family:var(--font-mono);font-size:12.5px;overflow-wrap:anywhere;user-select:all;min-width:0}
+.mini-btn{font:inherit;font-size:12px;line-height:1.2;padding:3px 8px;border-radius:6px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink-2);cursor:pointer}
+.mini-btn:hover{border-color:var(--ink-3)}
+.tags{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px}
+.dir{font-size:12px;line-height:1.5;padding:1px 8px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border:1px solid color-mix(in srgb,var(--c) 32%,transparent)}
+.dir.sci{--c:var(--sci)} .dir.math{--c:var(--math)} .dir.stem{--c:var(--stem)} .dir.tech{--c:var(--tech)} .dir.gen{--c:var(--ink-2)}
+.go{align-self:start;justify-self:end;white-space:nowrap;font-size:13.5px;text-decoration:none;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:6px 14px}
+.go:hover{background:var(--accent-soft)}
+.empty{padding:28px 22px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+
+/* Compact lists */
+.mini{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;margin-top:14px}
+.mrow{display:grid;grid-template-columns:124px minmax(0,1fr) auto;gap:4px 22px;padding:13px 22px;align-items:start}
+.mrow+.mrow{border-top:1px solid var(--rule-2)}
+.mrow.is-past{opacity:.55}
+.mdate{font-family:var(--font-mono);font-size:13px;font-variant-numeric:tabular-nums;display:grid;gap:2px}
+.mdate .sub{font-size:12px;color:var(--ink-3)}
+.mdate .left{font-size:12px;color:var(--calm)}
+.mdate .left.urgent{color:var(--urgent)} .mdate .left.soon{color:var(--soon)} .mdate .left.past{color:var(--ink-3)}
+.mdate .txt{font-family:var(--font-body)}
+.mbody{min-width:0;display:grid;gap:3px}
+.mj{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.mt{font-family:var(--font-title);font-size:16.5px;font-weight:600;line-height:1.35}
+.mn{font-size:13.5px;color:var(--ink-2)}
+.mlink{font-size:13px;white-space:nowrap;text-decoration:none;justify-self:end}
+.mlink:hover{text-decoration:underline}
+
+/* Coverage */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.box{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.box h3{font-size:15px;margin:0;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.box h3 .n{font-family:var(--font-mono);font-weight:500;color:var(--ink-3)}
+.box p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.box.wide{grid-column:1/-1}
+.method{font-size:14.5px;color:var(--ink-2);max-width:72ch;margin:6px 0 0}
+
+footer .wrap{padding-block:8px 40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule)}
+footer p{margin:14px 0 0}
+
+@media (max-width:720px){
+  .masthead .wrap{padding-block:28px 22px}
+  .call{grid-template-columns:minmax(0,1fr);padding:16px 16px 18px}
+  .when{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px}
+  .go,.mlink{justify-self:start}
+  .mrow{grid-template-columns:minmax(0,1fr);padding:12px 16px}
+  .mdate{display:flex;flex-wrap:wrap;gap:2px 10px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">JCR 2025 · SSCI / SCIE · Updated 24 Oct 2026</p>
+    <h1>SSCI calls for math&nbsp;&amp;&nbsp;science education</h1>
+    <p class="dek">Special issues and topical collections open to research on secondary mathematics and science classrooms, technology integration and computer-assisted instruction. Sorted by the next date that needs action; the day counts update to the day you open the page.</p>
+    <dl class="stats">
+      <div><dt>open calls with a deadline</dt><dd id="s-open">21</dd></div>
+      <div id="s-undated-wrap" hidden><dt>rolling or deadline to confirm</dt><dd id="s-undated">0</dd></div>
+      <div><dt>closing within two weeks</dt><dd id="s-soon" class="urgent">2</dd></div>
+    </dl>
+    <p class="next" id="s-next"></p>
+
+    <section class="runway" aria-labelledby="rw-title">
+      <div class="runway-head">
+        <h2 id="rw-title">Deadline timeline</h2>
+        <ul class="legend">
+          <li><span class="lg-dot"></span>Full paper</li>
+          <li><span class="lg-dot hollow"></span>Abstract first; the line runs to the full-paper deadline</li>
+          <li><span class="lg-dot" style="--c:var(--sci)"></span>Science</li>
+          <li><span class="lg-dot" style="--c:var(--math)"></span>Math</li>
+          <li><span class="lg-dot" style="--c:var(--stem)"></span>STEM</li>
+          <li><span class="lg-dot" style="--c:var(--tech)"></span>Tech &amp; AI</li>
+        </ul>
+      </div>
+      <div class="rw-scroll"><div class="rw-track" id="rw-track"></div></div>
+      <p class="rw-hint">Select a marker to jump to that call. On a phone, swipe sideways.</p>
+    </section>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="open" aria-labelledby="open-title">
+    <div class="sec-head">
+      <h2 id="open-title">Open calls</h2>
+      <p class="sec-sub">Calls with a fixed deadline. Red counts close within two weeks, amber within two months. Two-stage calls count down to the abstract deadline.</p>
+    </div>
+    <div class="toolbar" role="group" aria-label="Filter and sort">
+      <div class="seg" data-key="dir">
+        <span class="seg-label">Field</span>
+        <button type="button" class="chip" data-v="all">All</button>
+        <button type="button" class="chip" data-v="sci">Science</button>
+        <button type="button" class="chip" data-v="math">Math</button>
+        <button type="button" class="chip" data-v="stem">STEM</button>
+        <button type="button" class="chip" data-v="tech">Tech &amp; AI</button>
+      </div>
+      <div class="seg" data-key="stage">
+        <span class="seg-label">Stage</span>
+        <button type="button" class="chip" data-v="all">All</button>
+        <button type="button" class="chip" data-v="abstract">Abstract first</button>
+        <button type="button" class="chip" data-v="full">Full paper</button>
+      </div>
+      <div class="seg" data-key="sort">
+        <span class="seg-label">Sort</span>
+        <button type="button" class="chip" data-v="date">Deadline</button>
+        <button type="button" class="chip" data-v="jif">JIF</button>
+      </div>
+    </div>
+    <div class="listbar">
+      <span id="shown"></span>
+      <button type="button" class="btn" id="copy-list">Copy as plain-text list</button>
+      <span id="copy-status" role="status"></span>
+    </div>
+    <textarea id="copy-fallback" readonly hidden aria-label="List as plain text"></textarea>
+    <div class="ledger" id="list"></div>
+  </section>
+
+  <section id="rolling" aria-labelledby="rolling-title" hidden>
+    <div class="sec-head">
+      <h2 id="rolling-title">Rolling or deadline to confirm</h2>
+      <p class="sec-sub">Calls without a fixed deadline. The filters above apply here too.</p>
+    </div>
+    <div class="ledger" id="undated" style="margin-top:14px"></div>
+  </section>
+
+  <section id="adjacent" aria-labelledby="adj-title">
+    <div class="sec-head">
+      <h2 id="adj-title">Adjacent calls with a university focus</h2>
+      <p class="sec-sub">SSCI and SCIE calls that suit teaching research at university level rather than secondary school.</p>
+    </div>
+    <div class="mini" id="adj-list"></div>
+  </section>
+
+  <section id="esci" aria-labelledby="esci-title">
+    <div class="sec-head">
+      <h2 id="esci-title">ESCI journals</h2>
+      <p class="sec-sub">Every journal in this section is ESCI, not SSCI or SCIE. They are listed as secondary options because they are on topic, and most of the math-specific options are here. Computers and Education: Artificial Intelligence has a high JIF but is still ESCI. Education Sciences (MDPI) charges an APC.</p>
+    </div>
+    <div class="mini" id="esci-list"></div>
+  </section>
+
+  <section id="closed" aria-labelledby="closed-title">
+    <div class="sec-head">
+      <h2 id="closed-title">Closed or invitation-only</h2>
+      <p class="sec-sub">Announced recently and on topic, but no longer open to new authors. Useful for seeing which themes editors are commissioning.</p>
+    </div>
+    <div class="mini">
+      <div class="mrow">
+        <div class="mdate"><span>2026-10-28</span><span class="sub txt">Invited papers</span></div>
+        <div class="mbody"><div class="mj">British Journal of Educational Technology</div><div class="mt">Agentic AI in Education: Artificial Agency and the Social-Cognitive Dynamics of Learning</div><div class="mn">Abstracts closed on 1 Aug 2026; full papers from invited authors are due 28 Oct 2026. The only open BJET call, found in a manual check of the publisher site.</div></div>
+        <a class="mlink" href="https://bera-journals.onlinelibrary.wiley.com/hub/journal/14678535/homepage/call-for-papers/si-2026-000285" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-12-31</span><span class="sub txt">Accepted abstracts only</span></div>
+        <div class="mbody"><div class="mj">International Journal of Science and Mathematics Education</div><div class="mt">Transforming Equity in STEM Education: Disciplinary Challenges and Global Perspectives</div><div class="mn">The abstract stage closed early. The 31 Dec 2026 manuscript deadline applies only to authors whose abstracts were accepted.</div></div>
+        <a class="mlink" href="https://link.springer.com/collections/fgdedfhejh" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span class="txt">Closed</span></div>
+        <div class="mbody"><div class="mj">International Journal of Science and Mathematics Education</div><div class="mt">Mathematics for and in STEM Education</div><div class="mn">No longer on the journal's list of collections open for submission.</div></div>
+        <a class="mlink" href="https://link.springer.com/journal/10763/collections?filter=Open" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-09-30</span><span class="sub txt">Abstracts closed</span></div>
+        <div class="mbody"><div class="mj">ZDM – Mathematics Education</div><div class="mt">Moving Beyond Small-Scale Studies in Algebra Education: Scaling up Research and Translation</div><div class="mn">250-word extended abstracts closed on 30 Sep 2026; invited full papers are due in March 2027 for issue 3 of 2028.</div></div>
+        <a class="mlink" href="https://link.springer.com/journal/11858/updates" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-10-31</span><span class="sub txt">Invited authors</span></div>
+        <div class="mbody"><div class="mj">Educational Studies in Mathematics</div><div class="mt">Cultural Practices in Mathematical Argument</div><div class="mn">Open to invited authors only.</div></div>
+        <a class="mlink" href="https://link.springer.com/journal/10649/collections?filter=Open" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-02-28</span><span class="sub txt">Abstracts closed</span></div>
+        <div class="mbody"><div class="mj">Journal of Mathematical Behavior <span class="b esci">ESCI</span></div><div class="mt">Teacher Competencies in Mathematics: Relating Teaching and Student Learning</div><div class="mn">Extended abstracts closed on 28 Feb 2026; invited full papers were due 15 Jun 2026. Publication planned for June 2027.</div></div>
+        <a class="mlink" href="https://groups.google.com/g/mathematics-education-research/c/YTEDK3FHPhY" target="_blank" rel="noopener">Call ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2027-03-18</span><span class="sub txt">Invitation only</span></div>
+        <div class="mbody"><div class="mj">Canadian Journal of Science, Mathematics and Technology Education <span class="b esci">ESCI</span></div><div class="mt">Emotion, Motivation, and Identity in Mathematical Thinking and Achievement</div><div class="mn">A closed call: first submissions were due 10 Sep 2026 and final manuscripts on 18 Mar 2027.</div></div>
+        <a class="mlink" href="https://link.springer.com/collections/jbjejciabb" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-05-31</span><span class="sub txt">Abstracts closed</span></div>
+        <div class="mbody"><div class="mj">Journal of Science Education and Technology</div><div class="mt">GenAI in Scientific Practices</div><div class="mn">Abstracts closed on 31 May 2026; invited full papers were due 30 Sep 2026.</div></div>
+        <a class="mlink" href="https://link.springer.com/collections/eehhgegdha" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span class="txt">Invited authors</span></div>
+        <div class="mbody"><div class="mj">Journal of Research in Science Teaching</div><div class="mt">NARST Centennial Special Issue</div><div class="mn">Invited authors only. JRST is not taking special-issue proposals until 2027.</div></div>
+        <a class="mlink" href="https://narst.org/announce/2026-centennial-special-issue-call" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span class="txt">Closed</span></div>
+        <div class="mbody"><div class="mj">Science Education</div><div class="mt">Three recent special-issue calls</div><div class="mn">All three deadlines have passed.</div></div>
+        <span></span>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-08-31</span><span class="sub txt">Abstracts closed</span></div>
+        <div class="mbody"><div class="mj">Learning, Media and Technology</div><div class="mt">Towards a Critical Approach to AI in Education; Reframing AI Ethics in Education</div><div class="mn">Two AI special issues. Abstracts closed on 31 Aug and 10 Jul 2026; the 2027 manuscript deadlines apply to invited authors.</div></div>
+        <span></span>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-05-07</span><span class="sub txt">Abstracts closed</span></div>
+        <div class="mbody"><div class="mj">Research in Mathematics Education <span class="b esci">ESCI</span></div><div class="mt">Reframing Recognition: Whose Mathematics, Whose Methods, Whose Stories?</div><div class="mn">Abstracts closed on 7 May 2026; invited full papers are due 31 Oct 2026.</div></div>
+        <a class="mlink" href="https://think.taylorandfrancis.com/special_issues/reframing-recognition-whose-mathematics-whose-methods-whose-stories/" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-06-12</span><span class="sub txt">Closed</span></div>
+        <div class="mbody"><div class="mj">Journal of Science Teacher Education <span class="b esci">ESCI</span></div><div class="mt">Nature of Science and Science Teacher Education</div><div class="mn">Full papers were due 12 Jun 2026.</div></div>
+        <a class="mlink" href="https://think.taylorandfrancis.com/?p=61444" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+      <div class="mrow">
+        <div class="mdate"><span>2026-04-01</span><span class="sub txt">Closed</span></div>
+        <div class="mbody"><div class="mj">Journal of Research on Technology in Education</div><div class="mt">Promoting PK-12 Teachers’ AI Competencies: Practices and Challenges</div><div class="mn">Full papers were due 1 Apr 2026.</div></div>
+        <a class="mlink" href="https://fyi.coe.uga.edu/2025-09-call-for-proposals-promoting-pk-12-teachers-ai-competencies" target="_blank" rel="noopener">Page ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="coverage" aria-labelledby="cov-title">
+    <div class="sec-head">
+      <h2 id="cov-title">What was checked</h2>
+    </div>
+    <p class="method">The starting point was JCR 2025: Education &amp; Educational Research (764 journals) and Education, Scientific Disciplines (90 journals). Every SSCI or SCIE journal on mathematics, science, STEM or educational technology was checked for calls; journals on language, music, physical education, medicine and engineering were left out. ESCI journals were checked selectively, and journals whose sites block automated reading were checked by hand. A call counts as open only if its deadline falls on or after 23 Oct 2026.</p>
+    <div class="cards">
+      <div class="box">
+        <h3>Journal call pages checked, nothing open <span class="n">14</span></h3>
+        <p>Journal of Mathematics Teacher Education, Science &amp; Education, JCAL, ijCSCL, Instructional Science, IJTDE, AJET (takes special-issue proposals each Aug–Sep), IJETHE, Journal of Computing in Higher Education, IRRODL, Journal of Baltic Science Education, IJLLS (special-issue proposals only), Mathematics Education Research Journal (ESCI), Journal of Computers in Education (ESCI).</p>
+        <p>The Asia-Pacific Education Researcher also has open collections on AI-mediated writing feedback (28 Feb 2027) and on SDG 4 (rolling); neither targets math or science. Journals whose calls appear in the lists above are not repeated here.</p>
+      </div>
+      <div class="box">
+        <h3>Publisher listings and web searched, nothing current <span class="n">21</span></h3>
+        <p>Physical Review PER, Chemistry Education Research and Practice, Journal of Chemical Education, Education and Information Technologies, IEEE TLT, JRTE, Journal of the Learning Sciences, Studies in Science Education, CBE—Life Sciences Education, Professional Development in Education, Teachers and Teaching, Environmental Education Research, Mathematical Thinking and Learning, Research in Science &amp; Technological Education, Journal of Biological Education, Learning, Media and Technology, School Science and Mathematics (ESCI), International Electronic Journal of Mathematics Education (ESCI), Computers in the Schools (ESCI), Asia Pacific Journal of Education, Asia-Pacific Journal of Teacher Education.</p>
+      </div>
+      <div class="box wide">
+        <h3>Second pass: general, teacher-education, policy and higher-education journals <span class="n">116</span></h3>
+        <p>Added on 24 Oct 2026. Educational psychology, special education, early childhood and subject journals outside math and science (language, arts, PE, medical) were left out.</p>
+        <p>About 35 were checked on an official page: Springer collection pages (Higher Education, Australian Educational Researcher, Journal of Educational Change, Educational Assessment Evaluation and Accountability, Research in Higher Education, Minerva, Studies in Philosophy and Education, Higher Education Policy), SAGE’s list of open calls (covering its education journals, including Journal of Teacher Education), AERA’s journal page (AERJ, AERA Open, Educational Researcher, EEPA, RER, RRE), Emerald’s call list, and the RIED, RELIME and Elementary School Journal sites. About 20 more were searched by name. The remaining 60 or so, mostly Taylor &amp; Francis, Wiley and Elsevier titles plus several non-English journals, could not be checked one by one because those sites block automated reading.</p>
+        <p>Taylor &amp; Francis was then covered in full through its own list of current education calls (94 distinct calls across Taylor &amp; Francis, Routledge and Cogent, collected by hand on 24 Oct 2026). Matched against JCR 2025: 34 calls are in SSCI journals, 32 in ESCI journals and 28 in journals outside both lists. Calls on language, physical education, early childhood, educational psychology and other off-topic themes were left out.</p>
+        <p>The 16 remaining Wiley and Elsevier titles were then checked by hand on their call pages (International Journal of Educational Research, International Journal of Educational Development, Educational Research Review, The Internet and Higher Education, Studies in Educational Evaluation, Learning, Culture and Social Interaction, Economics of Education Review, British Educational Research Journal, European Journal of Education, Educational Measurement: Issues and Practice, Mind, Brain, and Education, Anthropology &amp; Education Quarterly, Science Education, JRST, Journal of Engineering Education, Biochemistry and Molecular Biology Education). Three open calls turned up: Studies in Educational Evaluation and Journal of Engineering Education (listed above) and European Journal of Education (listed under university focus).</p>
+        <p>New open calls from this pass: Distance Education, RIED, JRTE and Educational Philosophy and Theory (listed above), plus IJMEST’s automated-assessment issue and three Cogent Education collections (listed under ESCI). Journal of Teacher Education’s Black Teacher Project issue is past its abstract stage; Journal of Educational Change and Australian Educational Researcher have only open-ended collections.</p>
+      </div>
+      <div class="box wide">
+        <h3>Checked by hand on the publisher sites <span class="n">13</span></h3>
+        <p>Computers &amp; Education, BJET, Teaching and Teacher Education, Learning and Instruction, Thinking Skills and Creativity, Metacognition and Learning, European Journal of Physics, ACM Transactions on Computing Education, Journal of Educational Computing Research, The Physics Teacher, Computers and Education: Artificial Intelligence (ESCI), Interactive Learning Environments, Technology, Pedagogy and Education. These sites block automated reading.</p>
+        <p>Two calls turned up: BJET’s Agentic AI issue, whose abstract stage has closed (see above), and C&amp;E: AI’s AI Agents issue, listed under ESCI. A standing ILE call on AI and a TPE early-career issue, which older search results pointed to, are not on the current journal pages. The deadlines of the two newer ET&amp;S calls were read from their PDFs by hand.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Compiled 23–24 October 2026. Deadlines and submission rules change; confirm on each journal’s page before submitting. JIF and quartiles are from JCR 2025.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var DIRS={sci:"Science",math:"Math",stem:"STEM",tech:"Tech & AI",gen:"Any subject"};
+
+  var CALLS=[
+    {id:"sle-sol",journal:"Smart Learning Environments",abbr:"SLE",tl:"Learning sci.",index:"SSCI",q:"Q1",jif:"17.9",oa:"OA, APC",
+     title:"Science of Learning and EdTech",dirs:["tech"],stages:[{kind:"full",date:"2026-11-01"}],
+     url:"https://link.springer.com/collections/ebeecjafif",
+     note:"Research where the learning sciences meet educational technology; empirical classroom studies fit. Less than two weeks remain, so this is realistic only with a finished manuscript."},
+    {id:"sle-la",journal:"Smart Learning Environments",abbr:"SLE",tl:"LA + AI",index:"SSCI",q:"Q1",jif:"17.9",oa:"OA, APC",
+     title:"The Nexus between Learning Analytics and Artificial Intelligence",dirs:["tech"],stages:[{kind:"full",date:"2026-11-01"}],
+     url:"https://link.springer.com/collections/fajaaijijd",
+     note:"Learning analytics combined with AI. Manuscripts need log, trace or interaction data."},
+    {id:"etrd",journal:"Educational Technology Research and Development",abbr:"ETR&D",tl:"Co-regulation",index:"SSCI",q:"Q1",jif:"5.6",
+     title:"Human-AI Co-Regulation and Learner Agency: Rethinking Learning Processes in AI-Supported Learning Contexts",dirs:["tech"],
+     stages:[{kind:"abstract",date:"2026-12-15"},{kind:"full",date:"2027-03-15"}],
+     url:"https://link.springer.com/collections/cdaacabgef",
+     note:"How learners and AI jointly regulate learning in AI-supported settings, and how learner agency shows up there.",
+     how:{text:"Email an 800–1,000-word extended abstract to both guest editors",
+          people:[["Yun-Fang Tu","sandy0692@gmail.com"],["Gwo-Jen Hwang","gjhwang.academic@mail.ntcu.edu.tw"]],
+          subject:"Abstract for SI on Human-AI Co-Regulation and Learner Agency: Rethinking Learning Processes in AI-Supported Learning Environments"},
+     extra:"Invitations to submit full papers go out on 15 Jan 2027; publication is planned for 30 Apr 2028."},
+    {id:"sle-open",journal:"Smart Learning Environments",abbr:"SLE",tl:"Open ed.",index:"SSCI",q:"Q1",jif:"17.9",oa:"OA, APC",
+     title:"Open education principles between the tension of humans and machines in the Generative AI era",dirs:["tech"],
+     stages:[{kind:"full",date:"2026-12-30"}],url:"https://link.springer.com/collections/hacbfhdedh",
+     note:"Built around open-education principles; a weaker fit for secondary math and science classrooms."},
+    {id:"rise-arg",journal:"Research in Science Education",abbr:"RISE",tl:"Argumentation",index:"SSCI",q:"Q1",jif:"3.1",
+     title:"Argumentation and the problem of misinformation in science education",dirs:["sci"],
+     stages:[{kind:"full",date:"2026-12-31"}],url:"https://link.springer.com/collections/jfjieedgbd",
+     note:"Scientific argumentation and misinformation. Studies of argumentation in secondary science lessons fit well."},
+    {id:"rise-multi",journal:"Research in Science Education",abbr:"RISE",tl:"Multimodal",index:"SSCI",q:"Q1",jif:"3.1",
+     title:"Multimodal literacies and representations for learning",dirs:["sci"],
+     stages:[{kind:"full",date:"2026-12-31"}],url:"https://link.springer.com/collections/jiaadbagaf",
+     note:"How images, models, lab records and digital representations support science learning."},
+    {id:"ets-data",journal:"Educational Technology & Society",abbr:"ET&S",tl:"Ed. data",index:"SSCI",q:"Q1",jif:"7.1",oa:"OA, no APC",
+     title:"Sustainable Utilization of Educational Data for Learning and Teaching",dirs:["tech"],
+     stages:[{kind:"full",date:"2026-12-31"}],url:"https://drive.google.com/file/d/1zBu4o68TOfoOQ2hl4f0lPCaiu6o_GQ7P/view",urlLabel:"Call PDF",
+     note:"Sustainable and responsible use of educational data; manuscripts need a data-analysis component. The 31 Dec 2026 date was read from the call PDF in June 2026, and ET&S posts dates only there, so confirm it in the PDF. ET&S does not take papers that analyse only interview or survey self-reports without an educational treatment.",
+     editors:"Guandong Xu, Oscar Lin, Jing Lei, Changhao Liang, Chengjiu Yin"},
+    {id:"stem-ailit",journal:"International Journal of STEM Education",abbr:"IJ STEM",tl:"AI literacy",index:"SSCI + SCIE",q:"Q1",jif:"10.7",oa:"OA, APC",
+     title:"AI Literacy and STEM Education",dirs:["stem","tech"],
+     stages:[{kind:"full",date:"2027-01-31"}],url:"https://link.springer.com/collections/chdfcibfje",
+     note:"AI literacy in STEM contexts, not tied to a single subject."},
+    {id:"stem-assess",journal:"International Journal of STEM Education",abbr:"IJ STEM",tl:"Assessment",index:"SSCI + SCIE",q:"Q1",jif:"10.7",oa:"OA, APC",
+     title:"Assessment for STEM Education in the AI Era",dirs:["stem","tech"],
+     stages:[{kind:"full",date:"2027-01-31"}],url:"https://link.springer.com/collections/hbgejjhffg",
+     note:"Designing and running STEM assessment now that AI tools are in classrooms."},
+    {id:"ets-person",journal:"Educational Technology & Society",abbr:"ET&S",tl:"GenAI profiles",index:"SSCI",q:"Q1",jif:"7.1",oa:"OA, no APC",
+     title:"Person-Centered Evidence on Generative AI in Education: Learner Heterogeneity, Engagement Pathways, and Educational Equity",dirs:["tech"],
+     stages:[{kind:"full",date:"2027-01-31"}],url:"https://drive.google.com/file/d/1fPxOPeAGlZm0MvkEyHss5tDK1m1wFqbH/view",urlLabel:"Call PDF",
+     note:"How different learners use generative AI: learner profiles, engagement pathways and equity. STEM is named as a setting, and person-centred methods such as latent profile, sequence or epistemic network analysis are welcome. ET&S does not take papers that analyse only interview or survey self-reports without an educational treatment.",
+     editors:"Michael Yi-Chao Jiang, Morris Siu-Yung Jong (corresponding), Xiaoming Zhai",
+     extra:"Submit through the ET&S system and select the special-issue title. Publication is planned for 1 Apr 2028, Vol. 31(2)."},
+    {id:"csse",journal:"Cultural Studies of Science Education",abbr:"CSSE",tl:"STEAM",index:"SSCI",q:"Q2",jif:"1.9",
+     title:"Science and Sustainability in Transition: Towards a relational and embodied STEAM education",dirs:["sci","stem"],
+     stages:[{kind:"full",date:"2027-01-31"}],url:"https://link.springer.com/collections/bcjfbcbbjj",
+     note:"Sustainability and STEAM education from relational, cultural and embodied perspectives. Whether an abstract is required first was not confirmed, so read the page before preparing a manuscript."},
+    {id:"ijse-creat",journal:"International Journal of Science Education",abbr:"IJSE",tl:"Creativity",index:"SSCI",q:"Q2",jif:"2.4",
+     title:"What Makes Creativity Scientific? Recognising and Cultivating Scientific Creativity in Science Education",dirs:["sci"],
+     stages:[{kind:"abstract",date:"2027-02-15"},{kind:"full",date:"2027-09-15"}],
+     url:"https://think.taylorandfrancis.com/special_issues/what-makes-creativity-scientific/",
+     note:"How scientific creativity can be recognised and cultivated. Studies of how students generate and revise ideas during inquiry fit here.",
+     how:{text:"Email a 600–1,000-word abstract as a Word file",people:[["Michael Reiss","m.reiss@ucl.ac.uk"]]},
+     editors:"Plucker, Reiss, Won, Xu",extra:"Invitations to submit full papers go out on 15 Mar 2027."},
+    {id:"stem-math",journal:"International Journal of STEM Education",abbr:"IJ STEM",tl:"Math",index:"SSCI + SCIE",q:"Q1",jif:"10.7",oa:"OA, APC",
+     title:"Mathematics and Effective STEM Learning",dirs:["math","stem"],
+     stages:[{kind:"full",date:"2027-08-31"}],url:"https://link.springer.com/collections/hehbdefjia",
+     note:"STEM learning with mathematics at its core; submit full papers directly. The only open SSCI call found that centres on mathematics.",
+     editors:"Yeping Li, Alan Schoenfeld, Edward Silver"},
+    {id:"ets-trust",journal:"Educational Technology & Society",abbr:"ET&S",tl:"Trustworthy AI",index:"SSCI",q:"Q1",jif:"7.1",oa:"OA, no APC",
+     title:"Trustworthy AI-Enhanced Education Data Governance, Pedagogical Evidence, and Human Oversight",dirs:["tech"],
+     stages:[{kind:"full",date:"2027-07-22"}],url:"https://drive.google.com/file/d/1exUpgd0gA9gO4dToLqe40zni8YFkpZut/view",urlLabel:"Call PDF",
+     note:"Trustworthy AI in education across data governance, pedagogical evidence and human oversight. Each paper should treat one of the three in depth and link it to another; studies run in authentic settings over a sufficient period get priority. ET&S does not take papers that analyse only interview or survey self-reports without an educational treatment.",
+     editors:"Niels Pinkwart (corresponding), Olga Viberg, Jingsha He, Haoran Xie, Chee-Kit Looi",
+     extra:"Submit through the ET&S system and select the special-issue title. Publication is planned for 1 Jul 2028, Vol. 31(3)."},
+    {id:"rise-ai",journal:"Research in Science Education",abbr:"RISE",tl:"AI in sci. ed.",index:"SSCI",q:"Q1",jif:"3.1",
+     title:"Artificial Intelligence in Science Education",dirs:["sci","tech"],
+     stages:[{kind:"full",date:"2027-12-31"}],url:"https://link.springer.com/collections/dbihehajcd",
+     note:"The longest runway on the list. Any study of AI, including generative AI, in science education fits."},
+    {id:"see-culture",journal:"Studies in Educational Evaluation",abbr:"SEE",tl:"Teaching culture",index:"SSCI",q:"Q1",jif:"3.9",
+     title:"Long-term change in school and teaching culture",dirs:["gen"],
+     stages:[{kind:"full",date:"2026-12-01"}],url:"https://www.sciencedirect.com/journal/studies-in-educational-evaluation/about/call-for-papers",
+     note:"How schooling and teaching have changed over a decade or more, using ILSA data such as TIMSS and PISA, follow-ups of earlier studies, long-term projects or historical case studies. Papers must conceptualise school or teaching culture explicitly. Not subject-specific, but math and science classroom data fit.",
+     editors:"Eckhard Klieme, Falk Radisch, Katharina Maag Merki"},
+    {id:"jee-spec",journal:"Journal of Engineering Education",abbr:"JEE",tl:"P-20 engineering",index:"SSCI + SCIE",q:"Q1",jif:"5.3",
+     title:"Speculative Pedagogies and Collective Future-Making in P-20 Engineering Education",dirs:["stem"],
+     stages:[{kind:"abstract",date:"2026-11-30"},{kind:"full",date:"2027-05-01"}],
+     url:"https://onlinelibrary.wiley.com/journal/21689830",urlLabel:"Journal page",
+     note:"Empirical studies of speculative, future-making pedagogies in engineering, design and making, including pre-college settings and computer science. Submit an abstract of up to 1,000 words through the guest editors’ online form; invitations go out by 30 Dec 2026.",
+     editors:"Christopher Wright, Greses Pérez, Kristen Wendell"},
+    {id:"jrte-ethics",journal:"Journal of Research on Technology in Education",abbr:"JRTE",tl:"GenAI research ethics",index:"SSCI",q:"Q1",jif:"3.5",
+     title:"Ethics, Responsibility, and Generative AI in Educational Research",dirs:["tech"],
+     stages:[{kind:"abstract",date:"2026-11-15"},{kind:"full",date:"2027-04-01"}],
+     url:"https://think.taylorandfrancis.com/special_issues/ethics-responsibility-and-generative-ai-in-educational-research/",
+     note:"Ethical use of generative AI across the research process: design, data collection, analysis and writing. Every submission must name and describe its ethical framework. Submit an abstract of up to 1,000 words through the online form; invitations follow on 20 Dec 2026.",
+     editors:"Lorien S. Jordan, Bo Pei, Xin Qiao, Jennifer R. Wolgemuth"},
+    {id:"ept-ai",journal:"Educational Philosophy and Theory",abbr:"EPT",tl:"Beyond AI",index:"SSCI",q:"Q2",jif:"1.8",
+     title:"Intelligence Beyond the Artificial",dirs:["tech"],
+     stages:[{kind:"abstract",date:"2026-12-01"},{kind:"full",date:"2027-05-01"}],
+     url:"https://think.taylorandfrancis.com/special_issues/intelligence-beyond-the-artificial/",
+     note:"Which human capacities, such as empathy, ethical judgement and creativity, stay essential to learning in an age of algorithms. Mostly conceptual and philosophical work, so a weaker fit for classroom studies.",
+     editors:"Daniel Araya, David Kyei-Nuamah"},
+    {id:"de-genai",journal:"Distance Education",abbr:"DE",tl:"GenAI online",index:"SSCI",q:"Q2",jif:"2.2",
+     title:"Reimagining Distance Education in the Age of Generative AI: Transactional Distance, Human–AI Interaction, and Online Pedagogy",dirs:["tech"],
+     stages:[{kind:"abstract",date:"2026-10-31"},{kind:"full",date:"2027-03-31"}],
+     url:"https://think.taylorandfrancis.com/special_issues/reimagining-distance-education-age-generative-ai/",
+     note:"Learner autonomy, human–AI interaction, governance and instructional design in online and distance learning with generative AI. Fits online or blended secondary courses; the abstract is due within days."},
+    {id:"ried-iag",journal:"RIED – Revista Iberoamericana de Educación a Distancia",abbr:"RIED",tl:"GenAI digital ed.",index:"SSCI",q:"Q1",jif:"3.5",
+     title:"IAG en educación digital: integridad académica, evaluación, personalización y gobernanza (Vol. 30(2))",dirs:["tech"],
+     stages:[{kind:"full",date:"2026-12-01"}],url:"https://revistas.uned.es/index.php/ried/announcement",urlLabel:"Announcement",
+     note:"Monographic issue on generative AI in digital education: academic integrity, assessment, personalisation and governance. Articles are submitted during November 2026. An Ibero-American journal; check its language policy before writing."}
+  ];
+
+  var UNDATED=[];
+
+  var ADJ=[
+    {journal:"European Journal of Education",index:"SSCI",q:"Q1",jif:"5.3",
+     title:"Artificial Intelligence in Education: Learning, Employability, and Institutional Strategies",
+     stages:[{kind:"abstract",date:"2026-12-20"},{kind:"full",date:"2027-07-30"}],dirs:["tech"],
+     note:"Generative AI in higher education: learning, assessment integrity, employability and institutional policy. Email a title, a 500-word abstract and 100-word author bios to the three guest editors (h.cai@mdx.ac.uk, lentiuwright@gmail.com, han.han@hiof.no).",
+     url:"https://onlinelibrary.wiley.com/journal/14653435"},
+    {journal:"The Asia-Pacific Education Researcher",index:"SSCI",q:"Q1",jif:"4.5",
+     title:"Pedagogical Transformation through Human–AI Collaboration in English-Medium Instruction",
+     stages:[{kind:"abstract",date:"2026-11-30"},{kind:"full",date:"2027-05-31"}],dirs:["tech"],
+     note:"Subject teaching in English-medium higher education with AI tools. Fits studies of English-taught science or math courses at university level; send a 500-word abstract and short bios first. Guest editors: Tzu-Bin Lin, Leonardo Veliz, Xuesong (Andy) Gao.",
+     url:"https://link.springer.com/collections/djhaaaccge"},
+    {journal:"American Journal of Physics",index:"SCIE",q:"Q3",jif:"0.9",
+     title:"Olympic Physics: Teaching the Physics of Sports",
+     stages:[{kind:"full",date:"2027-07-01"}],dirs:["sci"],
+     note:"A special topic on teaching the physics of sports. AJP mainly publishes teaching at undergraduate level and beyond.",
+     url:"https://publishing.aip.org/publications/journals/special-topics/ajp/"}
+  ];
+
+  var ESCI=[
+    {journal:"Computers and Education: Artificial Intelligence",q:"Q1",jif:"23.4",
+     title:"AI Agents in Education: Multi-level Engagement for Student Learning",
+     stages:[{kind:"abstract",label:"Research proposal",date:"2026-11-30"},{kind:"full",date:"2027-05-31"}],dirs:["tech"],
+     note:"Email a 500–1,000-word research proposal on the call’s template to Weijiao Huang (wjhuang.academic@gmail.com); invitations go out on 18 Jan 2027. Studies must report a student learning outcome and connect at least two levels: students, teachers, institutions. The highest JIF on this page, but ESCI.",
+     url:"https://www.sciencedirect.com/special-issue/336171/ai-agents-in-education-multi-level-engagement-for-student-learning"},
+    {journal:"International Journal of Mathematical Education in Science and Technology",q:"Q3",jif:"0.9",
+     title:"Advances in Automated Assessment across Low-Resource Contexts",stages:[{kind:"abstract",date:"2026-10-31"},{kind:"full",date:"2027-04-30"}],dirs:["math","tech"],
+     note:"Automated assessment in mathematics (including AI and the STACK system), with a focus on large classes and low-resource settings. Email a 250-word abstract to Ian Jones; first-time authors get mentoring.",url:"https://think.taylorandfrancis.com/special_issues/automated-assessment-low-resource-contexts/"},
+    {journal:"Cogent Education",q:"Q1",jif:"2.7",
+     title:"Educational Innovation in Virtual Reality and Augmented Reality",stages:[{kind:"full",date:"2027-02-28"}],dirs:["tech"],
+     note:"Open article collection. Cogent is fully open access and charges an APC.",url:"https://authorservices.taylorandfrancis.com/call-for-papers/"},
+    {journal:"Cogent Education",q:"Q1",jif:"2.7",
+     title:"Reforming the Math Hierarchy: Policy, Practice, and the Politics of Equity in Access and Pathways",stages:[{kind:"full",date:"2027-04-02"}],dirs:["math"],
+     note:"Equity in math course pathways and tracking. Open article collection; APC applies.",url:"https://authorservices.taylorandfrancis.com/call-for-papers/"},
+    {journal:"Cogent Education",q:"Q1",jif:"2.7",
+     title:"Experiential Learning in STEM: From Experience to Learning and Impact",stages:[{kind:"full",date:"2027-08-06"}],dirs:["stem"],
+     note:"Experiential learning in STEM. Open article collection; APC applies.",url:"https://authorservices.taylorandfrancis.com/call-for-papers/"},
+    {journal:"International Journal of Mathematical Education in Science and Technology",q:"Q3",jif:"0.9",
+     title:"Math Education and Technology: Shaping the Future of Learning, Vol. II",stages:[{kind:"full",date:"2026-12-29"}],dirs:["math","tech"],
+     note:"Aimed at ICMET2026 presenters: plenary speakers and authors of full papers and posters.",url:"https://think.taylorandfrancis.com/special_issues/math-education-technology/"},
+    {journal:"Education Sciences (MDPI)",q:"Q1",jif:"3.5",
+     title:"Mathematics Education in the Digital Age: Integrating Technology to Enhance Mathematics Teaching and Learning",stages:[{kind:"full",date:"2026-12-31"}],dirs:["math","tech"],
+     note:"APC applies.",url:"https://www.mdpi.com/journal/education/special_issues"},
+    {journal:"Education Sciences (MDPI)",q:"Q1",jif:"3.5",
+     title:"The Role of Technology in STEM Education: Opportunities and Challenges",stages:[{kind:"full",date:"2026-12-31"}],dirs:["stem","tech"],
+     note:"APC applies.",url:"https://www.mdpi.com/journal/education/special_issues"},
+    {journal:"Journal of Statistics and Data Science Education",q:"Q2",jif:"2.3",
+     title:"Building AI-Powered Learning Experiences",stages:[{kind:"full",date:"2027-01-15"}],dirs:["math","tech"],
+     note:"AI-supported learning design for teaching statistics and data science.",url:"https://think.taylorandfrancis.com/special_issues/ai-powered-learning/"},
+    {journal:"Education Sciences (MDPI)",q:"Q1",jif:"3.5",
+     title:"Students’ Engagement with Socioscientific Issues: Meaning-Making, Identity, and Learning in STEM Education",stages:[{kind:"full",date:"2027-02-01"}],dirs:["sci","stem"],
+     note:"APC applies.",url:"https://www.mdpi.com/journal/education/special_issues/IN8V7S3VM6"},
+    {journal:"Informatics in Education",q:"Q2",jif:"2.4",
+     title:"Computational Thinking and AI in School Informatics and Mathematics",stages:[{kind:"abstract",date:"2027-02-20"},{kind:"full",date:"2027-06-15"}],dirs:["math","tech"],
+     note:"Computational thinking and AI in school informatics and mathematics; open access.",url:"https://infedu.vu.lt/journal/INFEDU"},
+    {journal:"Technology, Knowledge and Learning",q:"Q1",jif:"4.2",
+     title:"Reimagining Learning through SMART Pedagogy and Emerging Technologies",stages:[{kind:"full",date:"2027-08-31"}],dirs:["tech"],
+     note:"AI, immersive environments and robotics in teaching, learning and assessment, across education levels. Open call; lead guest editor Linda Daniela.",url:"https://link.springer.com/collections/fbddegcbja"}
+  ];
+
+  var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var WK=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  function $(s){return document.querySelector(s);}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function utc(s){var p=s.split("-").map(Number);return Date.UTC(p[0],p[1]-1,p[2]);}
+  var NOW=new Date();
+  var T=Date.UTC(NOW.getFullYear(),NOW.getMonth(),NOW.getDate());
+  function days(s){return Math.round((utc(s)-T)/864e5);}
+  function wk(s){return WK[new Date(utc(s)).getUTCDay()];}
+  function enDate(s){var p=s.split("-").map(Number);return p[2]+" "+MONTHS[p[1]-1]+" "+p[0];}
+  function urg(d){return d<0?"past":d<=14?"urgent":d<=60?"soon":"calm";}
+  function plural(n,w){return n+" "+w+(n===1?"":"s");}
+  function first(it){return it.stages?it.stages[0]:null;}
+  var reduceMotion=false;
+  try{reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+
+  /* Filters, remembered per viewer */
+  var KEY="cfp-filters-en-v1";
+  var DEFAULTS={dir:"all",stage:"all",sort:"date"};
+  var st=Object.assign({},DEFAULTS);
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&typeof saved==="object"){st=Object.assign(st,saved);}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+
+  function match(it){
+    if(st.dir!=="all"&&it.dirs.indexOf(st.dir)<0)return false;
+    if(st.stage!=="all"){var f=first(it);if(!f||f.kind!==st.stage)return false;}
+    return true;
+  }
+  function sortList(arr){
+    var a=arr.slice();
+    if(st.sort==="jif"){
+      a.sort(function(x,y){return parseFloat(y.jif)-parseFloat(x.jif)||((first(x)&&first(y))?utc(first(x).date)-utc(first(y).date):0);});
+    }else{
+      a.sort(function(x,y){
+        var fx=first(x),fy=first(y);
+        if(!fx||!fy)return 0;
+        var px=days(fx.date)<0,py=days(fy.date)<0;
+        if(px!==py)return px?1:-1;
+        return utc(fx.date)-utc(fy.date);
+      });
+    }
+    return a;
+  }
+
+  function howHTML(h){
+    var rows=h.people.map(function(p){
+      return '<span class="addr"><span class="who">'+esc(p[0])+'</span><code>'+esc(p[1])+'</code><button type="button" class="mini-btn" data-copy="'+esc(p[1])+'">Copy</button></span>';
+    }).join("");
+    if(h.subject){
+      rows+='<span class="addr"><span class="who">Subject line</span><code>'+esc(h.subject)+'</code><button type="button" class="mini-btn" data-copy="'+esc(h.subject)+'">Copy</button></span>';
+    }
+    return '<div class="how"><strong>'+esc(h.text)+'</strong>'+rows+'</div>';
+  }
+
+  function countHTML(f){
+    var d=days(f.date),u=urg(d);
+    var inner=d<0?'<span class="num">—</span><span class="unit">'+(f.kind==="abstract"?"Abstract stage closed":"Closed")+'</span>'
+             :d===0?'<span class="num">0</span><span class="unit">Closes today</span>'
+             :'<span class="num">'+d+'</span><span class="unit">'+(d===1?"day":"days")+'</span>';
+    return '<div class="count '+u+'">'+inner+'</div>';
+  }
+
+  function rowHTML(it){
+    var f=first(it),when,past=false;
+    if(f){
+      past=days(f.date)<0;
+      var second=it.stages[1]?'<div class="date2">Full paper '+it.stages[1].date+'</div>':'';
+      when='<div class="when">'+countHTML(f)+'<div class="date">'+f.date+' ('+wk(f.date)+')<span class="stage'+(f.kind==="abstract"?" abs":"")+'">'+(f.kind==="abstract"?"Abstract":"Full paper")+'</span></div>'+second+'</div>';
+    }else{
+      when='<div class="when"><div class="count none"><span class="num">—</span></div><div class="date2 txt">'+esc(it.dateNote)+'</div>'+(it.posted?'<div class="date2">Posted '+it.posted+'</div>':'')+'</div>';
+    }
+    var badges='<span class="b">'+esc(it.index)+'</span><span class="b'+(it.q==="Q1"?" q1":"")+'">'+it.q+'</span><span class="b">JIF '+it.jif+'</span>'+(it.oa?'<span class="b">'+esc(it.oa)+'</span>':'');
+    var extra=(it.editors?'<p class="fine">Guest editors: '+esc(it.editors)+'</p>':'')+(it.extra?'<p class="fine">'+esc(it.extra)+'</p>':'');
+    var tags=it.dirs.map(function(k){return '<span class="dir '+k+'">'+esc(DIRS[k])+'</span>';}).join("");
+    return '<article class="call'+(past?" is-past":"")+'" id="call-'+it.id+'">'+when+
+      '<div class="what"><div class="jline"><span class="jname">'+esc(it.journal)+'</span><span class="badges">'+badges+'</span></div>'+
+      '<h3 class="ctitle">'+esc(it.title)+'</h3><p class="note">'+esc(it.note)+'</p>'+(it.how?howHTML(it.how):"")+extra+
+      '<div class="tags">'+tags+'</div></div>'+
+      '<a class="go" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+esc(it.urlLabel||"Call page")+' ↗</a></article>';
+  }
+  function emptyHTML(){return '<div class="empty">No calls match these filters.<button type="button" class="btn" data-reset>Clear filters</button></div>';}
+
+  function render(){
+    var vis=sortList(CALLS.filter(match));
+    var vu=sortList(UNDATED.filter(match));
+    $("#list").innerHTML=vis.length?vis.map(rowHTML).join(""):emptyHTML();
+    $("#rolling").hidden=!UNDATED.length;
+    $("#undated").innerHTML=UNDATED.length?(vu.length?vu.map(rowHTML).join(""):emptyHTML()):"";
+    $("#shown").textContent="Showing "+vis.length+" of "+CALLS.length+" calls"+(UNDATED.length?" and "+vu.length+" of "+UNDATED.length+" rolling":"");
+    document.querySelectorAll(".seg[data-key]").forEach(function(g){
+      var k=g.getAttribute("data-key");
+      g.querySelectorAll(".chip").forEach(function(c){c.setAttribute("aria-pressed",String(c.getAttribute("data-v")===st[k]));});
+    });
+    dimMarkers();
+  }
+  function dimMarkers(){
+    document.querySelectorAll(".mk").forEach(function(m){
+      var id=m.getAttribute("data-id");
+      var it=CALLS.filter(function(c){return c.id===id;})[0];
+      m.classList.toggle("off",!!it&&!match(it));
+    });
+  }
+
+  function stats(){
+    var open=CALLS.filter(function(c){return days(first(c).date)>=0;});
+    var soon=open.filter(function(c){return days(first(c).date)<=14;});
+    $("#s-open").textContent=open.length;
+    $("#s-undated").textContent=UNDATED.length;
+    $("#s-undated-wrap").hidden=!UNDATED.length;
+    $("#s-soon").textContent=soon.length;
+    var sorted=open.slice().sort(function(a,b){return utc(first(a).date)-utc(first(b).date);});
+    if(sorted.length){
+      var d0=first(sorted[0]).date;
+      var same=sorted.filter(function(c){return first(c).date===d0;});
+      var names={};same.forEach(function(c){names[c.journal]=(names[c.journal]||0)+1;});
+      var who=Object.keys(names).map(function(n){return n+(names[n]>1?" ("+names[n]+" collections)":"");}).join(", ");
+      var dd=days(d0);
+      $("#s-next").innerHTML="Next deadline: <strong>"+d0+" ("+wk(d0)+")</strong>, "+esc(who)+", "+(dd===0?"closing today":plural(dd,"day")+" away")+".";
+    }else{
+      $("#s-next").textContent="Every dated call on this list has passed. The list needs a fresh scan.";
+    }
+  }
+
+  /* Timeline */
+  var RW0=utc("2026-10-23"),RW1=utc("2028-03-15");
+  function drawRunway(){
+    var track=$("#rw-track");
+    var W=track.clientWidth;
+    if(!W)return;
+    function X(s){return (utc(s)-RW0)/(RW1-RW0)*W;}
+    var h="";
+    var y=2026,m=10;
+    while(true){
+      var s=y+"-"+String(m+1).padStart(2,"0")+"-01";
+      if(utc(s)>RW1)break;
+      var x=X(s);
+      if(x<W-36){h+='<span class="tick'+(m===0?" year":"")+'" style="left:'+x.toFixed(1)+'px"><span>'+(m===0?y:MON[m])+'</span></span>';}
+      m++;if(m>11){m=0;y++;}
+    }
+    h+='<span class="axis"></span>';
+    var tx=(T-RW0)/(RW1-RW0)*W;
+    if(tx>=0&&tx<=W){h+='<span class="now" style="left:'+tx.toFixed(1)+'px"><span>Today, '+NOW.getDate()+" "+MON[NOW.getMonth()]+'</span></span>';}
+    var items=CALLS.slice().sort(function(a,b){return utc(first(a).date)-utc(first(b).date);});
+    h+=items.map(function(it){
+      var sg=it.stages,x1=X(sg[0].date),x2=X(sg[sg.length-1].date),two=sg.length>1;
+      var past=days(sg[0].date)<0;
+      var aria=it.journal+": "+it.title+". "+sg.map(function(z){return (z.kind==="abstract"?"Abstract ":"Full paper ")+z.date;}).join(", ");
+      return '<button type="button" class="mk d-'+it.dirs[0]+(two?" two":"")+(past?" past":"")+'" data-id="'+it.id+'" data-x1="'+x1.toFixed(1)+'" data-x2="'+x2.toFixed(1)+'" style="left:'+(x1-6).toFixed(1)+'px;'+(two?"width:"+(x2-x1+12).toFixed(1)+"px;":"")+'" aria-label="'+esc(aria)+'">'+
+        (two?'<span class="seg"></span>':'')+'<span class="dot s'+(sg[0].kind==="abstract"?" a":"")+'"></span>'+(two?'<span class="dot e"></span>':'')+
+        '<span class="lab"><b>'+esc(it.abbr)+'</b> '+esc(it.tl)+'</span></button>';
+    }).join("");
+    track.innerHTML=h;
+    var AX=34,LH=27,lanes=[];
+    track.querySelectorAll(".mk").forEach(function(mk){
+      var x1=parseFloat(mk.getAttribute("data-x1")),x2=parseFloat(mk.getAttribute("data-x2"));
+      var lw=mk.querySelector(".lab").offsetWidth;
+      var right=Math.max(x1+15+lw,x2+6);
+      var i=-1;
+      for(var k=0;k<lanes.length;k++){if(lanes[k]<x1-12){i=k;break;}}
+      if(i<0){i=lanes.length;lanes.push(0);}
+      lanes[i]=right;
+      mk.style.top=(AX+i*LH)+"px";
+      if(!mk.classList.contains("two")){mk.style.width=(15+lw+4)+"px";}
+    });
+    track.style.height=(AX+lanes.length*LH+22)+"px";
+    dimMarkers();
+  }
+
+  function flashRow(id){
+    var row=document.getElementById("call-"+id);
+    if(!row){st=Object.assign({},DEFAULTS,{sort:st.sort});save();render();row=document.getElementById("call-"+id);}
+    if(!row)return;
+    row.scrollIntoView({behavior:reduceMotion?"auto":"smooth",block:"center"});
+    row.classList.remove("flash");void row.offsetWidth;row.classList.add("flash");
+  }
+
+  /* Copy helpers */
+  function copyText(t){
+    if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t);}
+    return Promise.reject(new Error("no clipboard"));
+  }
+  function selectNode(n){try{var r=document.createRange();r.selectNodeContents(n);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}}
+  function tempLabel(b,msg){var o=b.getAttribute("data-label")||b.textContent;b.setAttribute("data-label",o);b.textContent=msg;setTimeout(function(){b.textContent=o;},1800);}
+
+  function listText(){
+    var dated=sortList(CALLS.filter(match)).filter(function(it){return days(first(it).date)>=0;});
+    var und=sortList(UNDATED.filter(match));
+    var all=dated.concat(und);
+    var text=all.map(function(it){
+      var w=it.stages?it.stages.map(function(s){return enDate(s.date)+", "+(s.kind==="abstract"?"abstract":"full paper");}).join("; "):it.dateEn;
+      return it.journal+"\n"+it.title+"\n("+w+")\n"+it.url;
+    }).join("\n\n");
+    return {text:text,n:all.length};
+  }
+
+  /* Compact dated lists */
+  function miniRows(arr,indexLabel){
+    return arr.slice().sort(function(a,b){return utc(first(a).date)-utc(first(b).date);}).map(function(it){
+      var f=first(it),d=days(f.date),u=urg(d);
+      var left=d<0?(f.kind==="abstract"?"Abstract stage closed":"Closed"):d===0?"Closes today":plural(d,"day")+" left";
+      var second=it.stages[1]?'<span class="sub">Full paper '+it.stages[1].date+'</span>':'';
+      return '<div class="mrow'+(d<0?" is-past":"")+'"><div class="mdate"><span>'+f.date+'</span><span class="sub txt">'+esc(f.label||(f.kind==="abstract"?"Abstract":"Full paper"))+'</span>'+second+'<span class="left txt '+u+'">'+left+'</span></div>'+
+        '<div class="mbody"><div class="mj">'+esc(it.journal)+' <span class="b'+((it.index||indexLabel)==="ESCI"?" esci":"")+'">'+esc(it.index||indexLabel)+'</span><span class="b">'+it.q+'</span><span class="b">JIF '+it.jif+'</span></div>'+
+        '<div class="mt">'+esc(it.title)+'</div><div class="mn">'+esc(it.note)+'</div>'+
+        '<div class="tags">'+it.dirs.map(function(k){return '<span class="dir '+k+'">'+esc(DIRS[k])+'</span>';}).join("")+'</div></div>'+
+        '<a class="mlink" href="'+esc(it.url)+'" target="_blank" rel="noopener">Call page ↗</a></div>';
+    }).join("");
+  }
+
+  /* Events */
+  document.addEventListener("click",function(e){
+    var c=e.target.closest(".seg[data-key] .chip");
+    if(c){var g=c.closest(".seg");st[g.getAttribute("data-key")]=c.getAttribute("data-v");save();render();return;}
+    if(e.target.closest("[data-reset]")){st=Object.assign({},DEFAULTS);save();render();return;}
+    var mk=e.target.closest(".mk");
+    if(mk){flashRow(mk.getAttribute("data-id"));return;}
+    var cp=e.target.closest("[data-copy]");
+    if(cp){
+      var t=cp.getAttribute("data-copy");
+      copyText(t).then(function(){tempLabel(cp,"Copied");},function(){selectNode(cp.previousElementSibling);tempLabel(cp,"Selected: press Ctrl+C");});
+      return;
+    }
+    if(e.target.closest("#copy-list")){
+      var r=listText(),status=$("#copy-status"),ta=$("#copy-fallback");
+      copyText(r.text).then(function(){status.textContent="Copied "+plural(r.n,"call");ta.hidden=true;},function(){
+        ta.value=r.text;ta.hidden=false;ta.focus();ta.select();status.textContent="The clipboard is blocked here. The text below is selected; press Ctrl+C (⌘C on a Mac).";
+      });
+    }
+  });
+  var rt;
+  window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(drawRunway,150);});
+
+  stats();
+  render();
+  $("#adj-list").innerHTML=miniRows(ADJ,"SSCI");
+  $("#esci-list").innerHTML=miniRows(ESCI,"ESCI");
+  drawRunway();
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(drawRunway);}
+})();
+</script>
+
+</body></html>
